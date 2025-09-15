@@ -15,9 +15,6 @@ const user_entity_1 = require("./user.entity");
 let Doctor = class Doctor {
     id;
     specialization;
-    location;
-    experienceYears;
-    consultationFee;
     user;
 };
 exports.Doctor = Doctor;
@@ -29,18 +26,6 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Doctor.prototype, "specialization", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Doctor.prototype, "location", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: 'int', default: 0 }),
-    __metadata("design:type", Number)
-], Doctor.prototype, "experienceYears", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: 'int', default: 0 }),
-    __metadata("design:type", Number)
-], Doctor.prototype, "consultationFee", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => user_entity_1.User, user => user.doctor),
     (0, typeorm_1.JoinColumn)({ name: 'user_id' }),

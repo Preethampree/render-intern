@@ -9,44 +9,60 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Doctor = void 0;
+exports.Patient = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("./user.entity");
-let Doctor = class Doctor {
+const otp_entity_1 = require("./otp.entity");
+let Patient = class Patient {
     id;
-    specialization;
-    location;
-    experienceYears;
-    consultationFee;
+    name;
+    email;
+    phone;
+    password;
+    createdAt;
+    updatedAt;
     user;
+    otps;
 };
-exports.Doctor = Doctor;
+exports.Patient = Patient;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Doctor.prototype, "id", void 0);
+], Patient.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Doctor.prototype, "specialization", void 0);
+], Patient.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ unique: true }),
+    __metadata("design:type", String)
+], Patient.prototype, "email", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ unique: true }),
+    __metadata("design:type", String)
+], Patient.prototype, "phone", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Doctor.prototype, "location", void 0);
+], Patient.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'int', default: 0 }),
-    __metadata("design:type", Number)
-], Doctor.prototype, "experienceYears", void 0);
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Patient.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'int', default: 0 }),
-    __metadata("design:type", Number)
-], Doctor.prototype, "consultationFee", void 0);
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], Patient.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => user_entity_1.User, user => user.doctor),
+    (0, typeorm_1.OneToOne)(() => user_entity_1.User, user => user.patient),
     (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
     __metadata("design:type", user_entity_1.User)
-], Doctor.prototype, "user", void 0);
-exports.Doctor = Doctor = __decorate([
+], Patient.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => otp_entity_1.Otp, otp => otp.patient),
+    __metadata("design:type", Array)
+], Patient.prototype, "otps", void 0);
+exports.Patient = Patient = __decorate([
     (0, typeorm_1.Entity)()
-], Doctor);
-//# sourceMappingURL=doctor.entity.js.map
+], Patient);
+//# sourceMappingURL=patient.entity.js.map
