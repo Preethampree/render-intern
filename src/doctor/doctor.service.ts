@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Doctor } from '../entities/doctor.entity';
+import { computeAvailableSlots } from './scheduling';
 
 export interface ListDoctorsFilters {
   specialization?: string;
@@ -46,6 +47,18 @@ export class DoctorService {
     qb.orderBy('doctor.experienceYears', 'DESC');
 
     return qb.getMany();
+  }
+
+  async getAvailableSlots(doctorId: number, date: string) {
+    if (!Number.isFinite(doctorId)) {
+      throw new BadRequestException('Invalid doctor id');
+    }
+    const doctor = await this.doctorRepo.findOne({ where: { id: doctorId } });
+    if (!doctor) {
+      throw new NotFoundException('Doctor not found');
+    }
+    const slots = computeAvailableSlots(doctorId, date);
+    return { doctorId, date, slots };
   }
 }
 

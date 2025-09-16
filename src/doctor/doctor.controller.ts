@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 
 @Controller('api/v1/doctors')
@@ -19,6 +19,14 @@ export class DoctorController {
       maxFee: maxFee !== undefined ? Number(maxFee) : undefined,
     };
     return this.doctorService.listDoctors(filters);
+  }
+
+  @Get(':id/available-slots')
+  async getAvailableSlots(
+    @Param('id') id: string,
+    @Query('date') date: string,
+  ) {
+    return this.doctorService.getAvailableSlots(Number(id), date);
   }
 }
 
