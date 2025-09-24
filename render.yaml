@@ -12,7 +12,9 @@ services:
       - key: PORT
         value: 10000
       - key: DATABASE_URL
-        fromDatabase: schedula-db
+        fromDatabase:
+          name: schedula-db
+          property: connectionString
       - key: RENDER
         value: 'true'
     healthCheckPath: /hello
