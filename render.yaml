@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: schedula-api-artisans
+    env: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase: schedula-db
+      - key: RENDER
+        value: 'true'
+    healthCheckPath: /hello
+
+databases:
+  - name: schedula-db
+    plan: free
