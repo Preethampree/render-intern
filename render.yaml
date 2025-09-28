@@ -4,7 +4,7 @@ services:
     env: node
     plan: free
     buildCommand: npm ci && npm run build
-    startCommand: npm run start
+    startCommand: npm run start:prod
     autoDeploy: true
     envVars:
       - key: NODE_ENV
@@ -17,7 +17,17 @@ services:
           property: connectionString
       - key: RENDER
         value: 'true'
-    healthCheckPath: /hello
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GOOGLE_CLIENT_ID
+        value: your-google-client-id
+      - key: GOOGLE_CLIENT_SECRET
+        value: your-google-client-secret
+      - key: FRONTEND_URL
+        value: https://your-frontend-url.com
+    healthCheckPath: /api/hello
 
 databases:
   - name: schedula-db

@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './entities/user.entity';
 import { Doctor } from './entities/doctor.entity';
 import { Patient } from './entities/patient.entity';
+import { Otp } from './entities/otp.entity';
 
 function getTypeOrmConfig() {
   const isRender = process.env.RENDER === 'true' || !!process.env.RENDER;
@@ -40,7 +41,7 @@ function getTypeOrmConfig() {
 @Module({
   imports: [
     TypeOrmModule.forRoot(getTypeOrmConfig()),
-    TypeOrmModule.forFeature([User, Doctor, Patient]),
+    TypeOrmModule.forFeature([User, Doctor, Patient, Otp]),
     DoctorModule,
     PatientModule,
     AuthModule,
